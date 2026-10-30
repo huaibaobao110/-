@@ -1,0 +1,47 @@
+# 在 GitHub 云端 macOS 上打包（本机是 Windows 时用这个）
+name: Build macOS
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  mac:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install deps
+        run: |
+          python -m pip install -U pip
+          python -m pip install -r requirements.txt
+
+      - name: PyInstaller
+        run: |
+          python -m PyInstaller --noconfirm chat_reply.spec
+
+      - name: Stage release folder
+        run: |
+          mkdir -p release
+          if [ -d dist/ChatReplyHelper.app ]; then
+            ditto dist/ChatReplyHelper.app release/ChatReplyHelper.app
+          else
+            ditto dist/ChatReplyHelper release/ChatReplyHelper
+          fi
+          cp config.example.json release/
+          cp PACKAGING.md release/
+          # zip for download
+          cd release
+          zip -r ../ChatReplyHelper-macOS.zip .
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ChatReplyHelper-macOS
+          path: ChatReplyHelper-macOS.zip

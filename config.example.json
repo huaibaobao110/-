@@ -1,0 +1,29 @@
+{
+  "api_base": "https://open.bigmodel.cn/api/paas/v4",
+  "api_key": "把你的 API Key 填这里",
+  "model": "glm-4-flash-250414",
+  "style": "贴合所选对象关系，三条候选风格分明，像真人微信短句",
+  "relation": "平辈",
+  "reply_count": 3,
+  "auto_send": false,
+  "platform": "微信",
+  "window_title": "微信",
+  "qq_window_title": "QQ",
+  "qq_ctrl_enter": false,
+  "qq_auto_reply": false,
+  "qq_auto_interval_sec": 12,
+  "capture_crop": {
+    "left": 0.36,
+    "top": 0.08,
+    "right": 0.995,
+    "bottom": 0.82,
+    "recent_from": 0.78
+  },
+  "qq_capture_crop": {
+    "left": 0.28,
+    "top": 0.07,
+    "right": 0.995,
+    "bottom": 0.78,
+    "recent_from": 0.75
+  }
+}
