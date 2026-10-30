@@ -6,7 +6,9 @@ from pathlib import Path
 
 from PIL import Image, ImageEnhance, ImageFilter, ImageOps, ImageStat
 
-ROOT = Path(__file__).resolve().parent
+from paths_util import app_dir
+
+ROOT = app_dir()
 STICKER_DIR = ROOT / "_stickers"
 
 

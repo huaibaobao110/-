@@ -20,6 +20,7 @@ from PIL import Image
 from clipboard_util import get_text, set_text
 import contacts as contacts_store
 from icon_util import copy_icon
+from paths_util import app_dir, resource_dir
 from reply_ai import MAX_MODES, RELATION_OPTIONS, default_modes_for, generate_replies, style_labels_for
 from qq_capture import capture_qq_dialogue
 from qq_send import find_qq_window, paste_and_send as qq_paste_and_send
@@ -34,9 +35,10 @@ from wechat_send import find_wechat_window, paste_and_send as wx_paste_and_send
 
 PLATFORMS = ("微信", "QQ")
 
-ROOT = Path(__file__).resolve().parent
+ROOT = app_dir()
 CONFIG_PATH = ROOT / "config.json"
 EXAMPLE_PATH = ROOT / "config.example.json"
+_BUNDLE_EXAMPLE = resource_dir() / "config.example.json"
 
 # Distinct palettes per relation (no purple / cream-terracotta)
 THEMES = {
@@ -97,10 +99,12 @@ def _lerp_hex(a: str, b: str, t: float) -> str:
 
 def load_config() -> dict:
     if not CONFIG_PATH.exists():
-        if EXAMPLE_PATH.exists():
-            CONFIG_PATH.write_text(EXAMPLE_PATH.read_text(encoding="utf-8"), encoding="utf-8")
-        else:
-            raise FileNotFoundError("缺少 config.json")
+        src = EXAMPLE_PATH if EXAMPLE_PATH.exists() else _BUNDLE_EXAMPLE
+        if not src.exists():
+            raise FileNotFoundError(
+                f"缺少 config.json。请在程序目录创建并填写 API Key：\n{CONFIG_PATH}"
+            )
+        CONFIG_PATH.write_text(src.read_text(encoding="utf-8"), encoding="utf-8")
     return json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
 
 
@@ -255,7 +259,11 @@ class App(ctk.CTk):
         self.geometry("640x820")
         self.minsize(560, 720)
 
-        self.config_data = load_config()
+        try:
+            self.config_data = load_config()
+        except Exception as e:  # noqa: BLE001
+            messagebox.showerror("配置错误", str(e))
+            self.config_data = {}
         self.active_contact = contacts_store.get_active()
         self.theme = dict(THEMES.get(self.active_contact["relation"], THEMES["平辈"]))
 
@@ -1290,9 +1298,22 @@ class App(ctk.CTk):
                 messagebox.showinfo("提示", "请先截图识别或填入对话")
             return
 
+        try:
+            cfg = load_config()
+        except Exception as e:  # noqa: BLE001
+            messagebox.showerror("配置错误", str(e))
+            return
+        key = str(cfg.get("api_key") or "")
+        if not key or "填这里" in key:
+            messagebox.showerror(
+                "缺少 API Key",
+                f"请用记事本打开并填写 api_key：\n{CONFIG_PATH}",
+            )
+            return
+
         relation = self.relation_var.get()
         contact = self.active_contact
-        style = (contact.get("style") or "").strip() or load_config().get("style", "")
+        style = (contact.get("style") or "").strip() or cfg.get("style", "")
         modes = contacts_store.effective_modes(contact)
         reply_prefix = contact.get("reply_prefix", "自动：")
         if reply_prefix is None:
@@ -1305,22 +1326,23 @@ class App(ctk.CTk):
 
         def work() -> None:
             try:
-                cfg = load_config()
                 self.config_data = cfg
+                self.after(0, lambda: self.status_var.set(self._busy_base + " · 请求模型中"))
                 replies = generate_replies(
                     incoming,
                     api_base=cfg.get("api_base", "https://api.deepseek.com/v1"),
-                    api_key=cfg.get("api_key", ""),
+                    api_key=key,
                     model=cfg.get("model", "deepseek-chat"),
                     style=style,
                     relation=relation,
                     modes=modes,
                     reply_prefix=reply_prefix,
                     count=len(modes),
+                    timeout=35.0,
                 )
-                self.after(0, lambda: self._apply_replies(replies, token))
+                self.after(0, lambda r=replies, t=token: self._apply_replies(r, t))
             except Exception as e:  # noqa: BLE001
-                self.after(0, lambda: self._fail(str(e), token))
+                self.after(0, lambda err=str(e), t=token: self._fail(err, t))
 
         threading.Thread(target=work, daemon=True).start()
 

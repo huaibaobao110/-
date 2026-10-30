@@ -13,10 +13,13 @@ import win32con
 import win32gui
 from PIL import Image, ImageEnhance, ImageGrab, ImageOps
 
+from paths_util import app_dir, resource_dir
 from wechat_send import find_wechat_window, force_foreground
 
-ROOT = Path(__file__).resolve().parent
-OCR_SCRIPT = ROOT / "ocr_win.ps1"
+ROOT = app_dir()
+OCR_SCRIPT = resource_dir() / "ocr_win.ps1"
+if not OCR_SCRIPT.exists():
+    OCR_SCRIPT = ROOT / "ocr_win.ps1"
 CONFIG_PATH = ROOT / "config.json"
 
 DEFAULT_CROP = {
@@ -286,6 +289,55 @@ _EMOJI_RE = re.compile(
 # Common OCR / WeChat symbol leftovers worth keeping
 _KEEP_SYMBOLS = set("!?？！…~～、，。:)(:D^_^→←↑↓★☆♥❤√×✔✅❌😊😂🤣😅😆😉😍😘🥰🤔👍🙏😭😡")
 
+# Windows OCR often splits 亻-side glyphs or reads 亻 as katakana イ/ｲ
+# e.g. 你 →「イ尔」, 他 →「イ也」, 们 →「イ门」
+_OCR_GLYPH_FIXES: tuple[tuple[str, str], ...] = (
+    ("イ尔", "你"),
+    ("ィ尔", "你"),
+    ("ｲ尔", "你"),
+    ("亻尔", "你"),
+    ("イ你", "你"),
+    ("ｲ你", "你"),
+    ("イ也", "他"),
+    ("ｲ也", "他"),
+    ("亻也", "他"),
+    ("イ门", "们"),
+    ("ｲ门", "们"),
+    ("亻门", "们"),
+    ("イ何", "何"),
+    ("ｲ何", "何"),
+    ("亻何", "何"),
+)
+_OCR_GLYPH_SPLIT_RE = re.compile(
+    r"[イィｲ亻]\s*[尔也门何你]"
+)
+
+
+def _fix_ocr_glyphs(text: str) -> str:
+    """Repair common Windows OCR splits of 亻-radical characters (你/他/们…)."""
+    if not text:
+        return text
+    # Collapse "イ 尔" / "亻 尔" before dictionary replace
+    def _merge_split(m: re.Match[str]) -> str:
+        raw = re.sub(r"\s+", "", m.group(0))
+        for bad, good in _OCR_GLYPH_FIXES:
+            if raw == bad:
+                return good
+        # イ/亻 + 尔 → 你 even if variant not listed
+        if raw.endswith("尔"):
+            return "你"
+        if raw.endswith("也"):
+            return "他"
+        if raw.endswith("门"):
+            return "们"
+        return raw
+
+    text = _OCR_GLYPH_SPLIT_RE.sub(_merge_split, text)
+    for bad, good in _OCR_GLYPH_FIXES:
+        if bad in text:
+            text = text.replace(bad, good)
+    return text
+
 
 def _has_emoji_or_kaomoji(text: str) -> bool:
     if _EMOJI_RE.search(text):
@@ -300,9 +352,11 @@ def _has_emoji_or_kaomoji(text: str) -> bool:
 
 def _clean_ocr_text(text: str) -> str:
     text = text.strip()
+    text = _fix_ocr_glyphs(text)
     # Keep emoji; only collapse spaces between CJK letters
     text = re.sub(r"(?<=[\u4e00-\u9fff])\s+(?=[\u4e00-\u9fff])", "", text)
     text = re.sub(r"[ \t]{2,}", " ", text)
+    text = _fix_ocr_glyphs(text)  # again after space collapse
     # Don't strip if the whole token is emoji/symbol
     if _has_emoji_or_kaomoji(text) and len(text) <= 8:
         return text.strip()

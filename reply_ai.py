@@ -20,50 +20,60 @@ RELATION_STYLES: dict[str, tuple[str, ...]] = {
 
 RELATION_RULES: dict[str, str] = {
     "长辈": (
-        "对方是长辈（父母、长亲、老师等）。\n"
-        "尊敬稳重，可适度用「您」；少用网络梗与夸张表情；禁止暧昧、油腻奉承。"
+        "【身份：长辈】对方是父母/长亲/老师等，辈分更高。\n"
+        "你的口吻 = 晚辈回话：稳重、礼貌，优先用「您」；短句清楚，不顶嘴。\n"
+        "身份辨识标准：读完应像在跟爸妈/老师发微信，绝不像损友互怼。\n"
+        "严禁：暧昧撩拨、阴阳怪气、网络烂梗、油腻奉承、顶撞、复读对方原词。\n"
+        "三条差异只在「稳妥 / 关心 / 轻松」，整体仍必须是对长辈。"
     ),
     "平辈": (
-        "对方是平辈（朋友、同学、同事、恋人等）。\n"
-        "口语自然；多种说话方式要明显不同，含正常/暧昧/搞笑/阴阳怪气。"
+        "【身份：平辈】对方是朋友/同学/同事/恋人等，同辈。\n"
+        "你的口吻 = 同龄人微信：口语、短句、有态度，可用「你」。\n"
+        "身份辨识标准：读完应像损友/暧昧对象聊天，绝不「您」或客服腔。\n"
+        "四条必须一眼能分清：正常≠暧昧≠搞笑≠阴阳；禁止四条同质化、禁止复读对方原句。\n"
+        "严禁写成对长辈的客服腔或对晚辈的说教腔。"
     ),
     "晚辈": (
-        "对方是晚辈（弟弟妹妹、学生、更年轻的人）。\n"
-        "亲切平等；可耐心说明、可轻松玩笑；禁止端着训人；\n"
-        "不要无脑喊加油，除非对方明确在求助/诉苦。"
+        "【身份：晚辈】对方更年轻（弟弟妹妹/学生等）。\n"
+        "你的口吻 = 靠谱的大一点同辈：亲切平等、可带一点照顾，但不端着训人。\n"
+        "身份辨识标准：读完应像对弟弟妹妹说话，不油腻不爹味。\n"
+        "严禁：暧昧、阴阳怪气、爹味说教、空洞「加油你一定行」、复读对方原词。\n"
+        "三条差异在「随和 / 耐心 / 幽默」，整体仍像对年轻人。"
     ),
 }
 
 STYLE_GUIDES: dict[str, dict[str, str]] = {
     "长辈": {
-        "稳妥得体": "礼貌清楚、句子完整一点；少语气词；几乎不用表情。",
-        "关心体贴": "先回应事情，再带一句关心（身体/吃饭/别太累）；温柔但不肉麻。",
-        "轻松自然": "仍尊敬，但更口语、短一些；最多一个温和语气词，如「哈哈」「嗯嗯」。",
+        "稳妥得体": "先把事情说清楚；句子完整；少语气词；不用表情。像汇报/应答，不撒娇。",
+        "关心体贴": "先接住对方的事，再补一句具体关心（吃饭/休息/别着凉）；温柔克制，不肉麻。",
+        "轻松自然": "仍尊敬，但更短更口语；最多一个「嗯嗯/哈哈」；绝不玩笑过头。",
     },
     "平辈": {
-        "正常风格": "像普通朋友随口回：接住话题、信息清楚；0-1个自然语气词；表情克制。",
-        "暧昧风格": (
-            "必须明显偏暧昧，不能写成普通朋友口吻。"
-            "要有亲昵感、占有欲一点点、拉近距离："
-            "可撒娇、吃醋式关心、暗示想念/想见、用「你啊」「笨蛋」「嗯？」收尾；"
-            "多用省略号、轻声、反问；可1-2个软表情（😊🥰😳😉）；"
-            "禁止露骨色情，但撩意要够强，读起来能听出在撩。"
+        "正常风格": (
+            "普通朋友随口回：直接接话、给态度或下一步，信息清楚；"
+            "0-1个语气词；几乎不用表情；不要撩、不要阴阳、不要硬搞笑；"
+            "禁止复读对方原词（如对方说随缘，不要回「随缘吧」）。"
         ),
-        "搞笑风格": "接梗、反转、轻吐槽、夸张一点点；可玩对方刚发的表情包语义；"
-        "可用1个逗趣表情（如😂/🤣/👀）；不要阴阳怪气，不要冒犯。",
+        "暧昧风格": (
+            "必须像在撩/拉近距离：亲昵、试探、轻吃醋、想见或「就你这样…」；"
+            "可用「你啊」「嗯？」「笨蛋」和省略号；1-2个软表情😊🥰😳；"
+            "读完必须能听出暧昧；禁止写成普通朋友、搞笑吐槽或阴阳。"
+        ),
+        "搞笑风格": (
+            "必须好笑：接梗、反转、夸张吐槽、自嘲；可夸张改编对方原意，不要原句复读；"
+            "1个逗趣表情😂🤣👀；禁止假客气阴阳，禁止油腻暧昧。"
+        ),
         "阴阳怪气": (
-            "必须极度阴阳怪气，语气要冲、要刺、假笑感拉满，一眼听出在阴阳。"
-            "表面客套礼貌，实际冷嘲挖苦、刺痛对方："
-            "句式多用「挺好的呀」「行吧您开心就好」「不回也正常呢」「原来在忙啊，懂了」"
-            "「哦？这样啊」「真会说话」「辛苦你了哈」「那你继续呗」；"
-            "可叠「哈」「呵」「哦？」「是吗」「呢」和省略号；可带假笑😊或👀；"
-            "禁止脏话辱骂和违法内容；禁止写成普通吐槽/搞笑；阴阳力度必须够强。"
+            "必须假客气真刺痛：表面礼貌关心，实际冷嘲挖苦；"
+            "句式如「挺好的呀」「您开心就好」「那你继续呗」「哦？懂了」；"
+            "可叠「哈/呵/呢」；可带假笑😊或👀；"
+            "禁止脏话；禁止写成普通吐槽或搞笑段子——要阴阳。"
         ),
     },
     "晚辈": {
-        "随和自然": "平等口语，像熟人聊天；简短直接。",
-        "耐心回应": "把对方没说清的点讲明白/给个可行建议；语气温和，不说教。",
-        "轻松幽默": "温和玩笑或俏皮接话；可轻微调侃但不贬低；表情最多1个。",
+        "随和自然": "平等口语，像熟人；简短直接；不端着。",
+        "耐心回应": "把对方没说清的点讲明白或给可行下一步；温和，不说教、不鸡汤。",
+        "轻松幽默": "温和俏皮接话；可轻调侃但不贬低；表情最多1个。",
     },
 }
 
@@ -108,71 +118,98 @@ def _system_prompt(relation: str, persona: str, modes: list[dict[str, str]]) -> 
     guide_lines = "\n".join(f"- {m['name']}：{m['guide']}" for m in modes)
     n = len(modes)
     persona_block = (
-        f"用户为本对象设定的【说话方式/人设】（最高优先级，{n}条都必须遵守）：\n{persona}\n"
+        f"【人设底色】（可参考，但不得抹平身份与风格差异）：{persona}\n"
         if persona.strip()
-        else "未指定专属人设时，按身份默认语气。\n"
+        else "未指定专属人设：严格按身份 + 各风格生成。\n"
     )
-    return f"""你在代替「用户」写下一条微信回复。发出去的话 = 「自己」。
+    contrast = {
+        "长辈": "例：对方「今天加班」→ 稳妥「好的，您注意身体」/ 关心「加班辛苦了，记得吃饭」/ 轻松「嗯嗯，别太累」——都像对长辈。",
+        "平辈": "例：对方「随缘吧」→ 正常「行，那先这样」/ 暧昧「你这么说…我有点想你了」/ 搞笑「行吧社畜佛系冠军」/ 阴阳「挺好的呀，随缘真厉害呢」——四条气质完全不同。",
+        "晚辈": "例：对方「好难啊」→ 随和「怎么了，说说」/ 耐心「先把哪一步卡住了发我」/ 幽默「难度拉满是吧」——像对年轻人，不爹味。",
+    }.get(relation, "")
+    return f"""你在代替「用户」发微信。你写的每一句 = 「自己」发出去的话。
 
-输入可能是单句，也可能是带角色的历史对话：
-对方：……
-自己：……
-对方：[表情包] / 😂 / 嗯
+【角色铁律】
+- 「对方」= 聊天对象刚说的/历史里对方说的
+- 「自己」= 用户已经发过的
+- 你只写「自己」的下一句，去接「对方」最新内容
+- 禁止模仿对方口吻；禁止把「自己」历史原句稍改再发
+- 禁止输出「对方：」「自己：」前缀或风格名称
 
-角色：
-- 「对方」= 聊天对象；「自己」= 用户已发送内容
-- 写用户的下一条（接在最后一轮后），要吃透上下文
-- 若角色可能标反了，以语义判断谁在问、谁在答，仍生成「自己」该说的话
-
-对方身份：{relation}
+【身份铁律】当前对方身份 = {relation}
 {rules}
+{contrast}
 
 {persona_block}
-共 {n} 条候选，必须按下面「说话方式」生成，顺序固定；
-每种方式都要在【人设】约束下改写话术（同一人设、不同语气/角度），不能无视人设：
+请按顺序生成 {n} 条，风格必须分明（同一意思也不许句式雷同）：
 {guide_lines}
 
-表情与符号：
-- 对话里可能出现 emoji、[表情包:开心/宠溺/搞笑/委屈/冷淡/无语]、颜文字
-- 看到 [表情包:…] 要按情绪标签接话，不要当没看见
-- 不要刷屏堆表情
-
-硬性要求：
-- 错误：对方说「你要考公啊」→「加油你一定行」
-- 正确：对方说「你要考公啊」→「嗯在看呢」/「还没定」
-- 各条内容不能雷同（别只改两三个字）
-- 不要重复自己刚说过的整句
-- 不要书面语、客服腔；不要解释；不要加引号；不要写风格/角色标签
+【质量】
+- 先看清对方最后一句在说什么，再针对性回，禁止答非所问
+- 严禁复读/拼接对方原句当回复（坏例子：对方「随缘吧」→「那确实，随缘吧」）
+- 错误示范：对方「随缘吧」→「加油你一定行」/「随缘吧」/四条都差不多
+- 正确：接住情绪，{relation}身份下按各风格给出完全不同态度
+- 换身份必须换口吻：长辈用您/稳；平辈用你/冲或撩；晚辈亲切不爹
+- 口语短句；不要书面语、客服腔、解释、引号、风格名
 - 只输出 JSON 字符串数组，长度必须是 {n}
-- 默认简体中文
+- 简体中文
 """
 
 
 DEFAULT_FALLBACKS = [
     "glm-4-flash-250414",
-    "glm-4.7-flash",
     "glm-4-flash",
 ]
 
 STYLE_LABELS = RELATION_STYLES["平辈"]
 
 
+def _normalize_reply_items(data: list[Any]) -> list[str] | None:
+    """Flatten model quirks: nested lists, Chinese顿号 arrays, quoted blobs."""
+    if len(data) == 1 and isinstance(data[0], list):
+        data = data[0]
+    if len(data) == 1 and isinstance(data[0], str):
+        inner = data[0].strip()
+        # whole array stuffed into one string, often with 、 instead of ,
+        if inner.startswith("[") and inner.endswith("]"):
+            fixed = inner.replace("、", ",")
+            try:
+                nested = json.loads(fixed)
+                if isinstance(nested, list) and len(nested) >= 2:
+                    data = nested
+            except json.JSONDecodeError:
+                parts = re.findall(r"[「\"“](.+?)[」\"”]", inner)
+                if len(parts) >= 2:
+                    data = parts
+                else:
+                    parts = [p.strip() for p in re.split(r"[、,]", inner.strip("[]")) if p.strip()]
+                    if len(parts) >= 2:
+                        data = parts
+    out = [str(x).strip() for x in data if str(x).strip()]
+    return out or None
+
+
 def _extract_json_list(text: str) -> list[str] | None:
     text = text.strip()
-    try:
-        data = json.loads(text)
-        if isinstance(data, list):
-            return [str(x).strip() for x in data if str(x).strip()]
-    except json.JSONDecodeError:
-        pass
+    # model sometimes uses Chinese顿号 inside JSON-like arrays
+    candidates = [text, text.replace("、", ",")]
+    for cand in candidates:
+        try:
+            data = json.loads(cand)
+            if isinstance(data, list):
+                return _normalize_reply_items(data)
+        except json.JSONDecodeError:
+            pass
     match = re.search(r"\[[\s\S]*\]", text)
     if match:
-        try:
-            data = json.loads(match.group(0))
-            if isinstance(data, list):
-                return [str(x).strip() for x in data if str(x).strip()]
-        except json.JSONDecodeError:
-            return None
+        blob = match.group(0)
+        for cand in (blob, blob.replace("、", ",")):
+            try:
+                data = json.loads(cand)
+                if isinstance(data, list):
+                    return _normalize_reply_items(data)
+            except json.JSONDecodeError:
+                continue
     return None
 
 
@@ -331,39 +368,49 @@ def _chat_once(
         if has_roles
         else "下面是对方消息（可能含多段、emoji、[表情包]）。请生成用户的回复。"
     )
-    style_lines = "；".join(f"{m['name']}={m['guide']}" for m in modes_use)
+    style_lines = "\n".join(f"{i+1}. {m['name']}：{m['guide']}" for i, m in enumerate(modes_use))
     roast = any(k in style_use for k in ("吐槽", "怼", "损友", "抬杠"))
     example = json.dumps([f"回复{i+1}" for i in range(n)], ensure_ascii=False)
+    # Pull last 对方 line for explicit focus
+    last_other = ""
+    for line in reversed(incoming_use.splitlines()):
+        s = line.strip()
+        if s.startswith("对方：") or s.startswith("对方:"):
+            last_other = re.sub(r"^对方[:：]\s*", "", s).strip()
+            break
     user_prompt = (
-        f"【人设/说话总则】（必须遵守，{n}条都要体现）：{style_use or '无'}\n"
-        f"对方身份：{relation}\n"
+        f"【对方身份】{relation} ← 全部{n}条都必须符合这个身份的说话分寸\n"
+        f"【人设底色】{style_use or '无'}（底色而已；身份与风格差异更重要）\n"
         f"{context_hint}\n"
-        f"请严格按说话方式生成 {n} 条：{label_join}。\n"
-        f"各方式要点：{style_lines}\n"
-        "每条都要在人设约束下，按该方式改写话术；人设与默认礼貌冲突时，以人设为准。\n"
-        "用口语短句；可以损、可以怼，但不要人身攻击脏话，不要违法违规内容。\n"
-        f"返回 JSON 数组，如 {example}。{n}条要明显不一样。\n"
-        "若对方发了表情包/emoji/[表情包:情绪]，请接住情绪再回。不要输出角色前缀。\n"
     )
-    if roast:
+    if last_other:
+        user_prompt += f"【对方最新一句】{last_other}\n你要接的是这句，不要答非所问，不要复读。\n"
+    user_prompt += (
+        f"按顺序生成 {n} 条（{label_join}），气质必须互不相同：\n{style_lines}\n"
+        "规则：只写「自己」要发的话；不要角色前缀；不要风格标签；不要脏话违法内容。\n"
+        f"返回 JSON 数组，长度 {n}，如 {example}。\n"
+    )
+    if relation == "长辈":
         user_prompt += (
-            "人设偏损友互怼：各条都要带点嘲讽/抬杠，但用玩笑口吻；"
-            "阴阳怪气那条要假客气真刺痛。\n"
+            "硬性：身份=长辈。三条都要用晚辈对长辈口吻（可「您」）；"
+            "禁止暧昧/阴阳/烂梗/顶撞；禁止复读对方原词。\n"
         )
-    if any("暧昧" in m["name"] for m in modes_use):
+    elif relation == "晚辈":
         user_prompt += (
-            "其中名称含「暧昧」的那条要更亲昵、有试探感，"
-            "可用省略号和轻声反问，点到为止。\n"
+            "硬性：身份=晚辈。三条都要亲切平等、不爹味；"
+            "禁止暧昧/阴阳；禁止复读对方原词。\n"
         )
-    if any("阴阳" in m["name"] for m in modes_use):
+    elif relation == "平辈":
         user_prompt += (
-            "其中名称含「阴阳」的那条必须阴阳感极强：假客气、冷嘲、反问刺痛、假笑，"
-            "读完能感到刺痛；绝不能写成普通吐槽、搞笑或正常朋友口吻。\n"
+            "硬性：身份=平辈。四条必须分别是：正常朋友 / 明显在撩 / 明显好笑 / 明显阴阳。"
+            "禁止复读对方原词；禁止四条同质；禁止写成对长辈的「您」。\n"
         )
-    user_prompt += f"\n对话内容：\n{incoming_use.strip()}"
+    if roast and relation == "平辈":
+        user_prompt += "人设偏损友：正常也可以冲一点，但暧昧仍要撩、阴阳仍要假客气。\n"
+    user_prompt += f"\n完整对话：\n{incoming_use.strip()}"
     body: dict[str, Any] = {
         "model": model,
-        "temperature": 0.9 if soft else 0.95,
+        "temperature": 0.85 if soft else 1.0,
         "messages": [
             {"role": "system", "content": _system_prompt(relation, style_use, modes_use)},
             {"role": "user", "content": user_prompt},
@@ -382,7 +429,7 @@ def _chat_once(
         method="POST",
     )
     last_http: Exception | None = None
-    for attempt in range(3):
+    for attempt in range(2):
         try:
             with urllib.request.urlopen(req, timeout=timeout) as resp:
                 raw = resp.read().decode("utf-8")
@@ -392,18 +439,21 @@ def _chat_once(
             if _is_content_filter(detail):
                 raise ContentFilterError(_friendly_http_error(e.code, detail)) from e
             msg = _friendly_http_error(e.code, detail)
-            if _is_transient(e.code, detail) and attempt < 2:
+            if _is_transient(e.code, detail) and attempt < 1:
                 last_http = TransientAPIError(msg)
-                time.sleep(0.8 * (attempt + 1))
+                time.sleep(0.5)
                 continue
             if _is_transient(e.code, detail):
                 raise TransientAPIError(msg) from e
             raise RuntimeError(msg) from e
         except urllib.error.URLError as e:
-            msg = f"无法连接 API: {e.reason}"
-            if attempt < 2:
+            msg = (
+                f"无法连接 API: {e.reason}\n"
+                "若需代理，可在系统设置代理，或设置环境变量 HTTPS_PROXY 后重启程序。"
+            )
+            if attempt < 1:
                 last_http = TransientAPIError(msg)
-                time.sleep(0.8 * (attempt + 1))
+                time.sleep(0.5)
                 continue
             raise TransientAPIError(msg) from e
     else:
@@ -428,9 +478,17 @@ def _chat_once(
     replies = _extract_json_list(content) or _parse_lines(content, n)
     if not replies:
         raise RuntimeError(f"模型没有返回可用回复：{content[:200]}")
-    while len(replies) < n:
-        replies.append(replies[-1])
-    return [_with_prefix(r, reply_prefix) for r in replies[:n]]
+    # refuse single-blob / duplicate padding that collapses styles
+    if len(replies) == 1 and n > 1:
+        raise TransientAPIError(f"模型只返回了1条，需要{n}条风格差异回复")
+    if len(replies) < n:
+        raise TransientAPIError(f"模型只返回了{len(replies)}条，需要{n}条")
+    # drop accidental style labels leaked into text
+    cleaned: list[str] = []
+    for r in replies[:n]:
+        r = re.sub(r"^(稳妥得体|关心体贴|轻松自然|正常风格|暧昧风格|搞笑风格|阴阳怪气|随和自然|耐心回应|轻松幽默)[:：\s]+", "", r).strip()
+        cleaned.append(r)
+    return [_with_prefix(r, reply_prefix) for r in cleaned]
 
 
 def generate_replies(
@@ -485,6 +543,9 @@ def generate_replies(
                 break  # try next model
             except TransientAPIError as e:
                 last_err = e
+                if not soft:
+                    time.sleep(0.3)
+                    continue  # same model, softer / second try
                 if i < len(models) - 1:
                     time.sleep(0.8)
                     break  # next fallback model

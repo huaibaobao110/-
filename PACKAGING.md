@@ -20,12 +20,22 @@ PyInstaller **不能跨平台交叉编译**：
 
 ## Windows（本机）
 
+便携版：
+
 ```bat
 build_windows.bat
 ```
 
-产物：`dist\ChatReplyHelper\ChatReplyHelper.exe`  
-（已可在本仓库 `dist\ChatReplyHelper\` 找到）
+产物：`dist\ChatReplyHelper\ChatReplyHelper.exe`
+
+安装包（Inno Setup，需先有便携版）：
+
+```bat
+build_installer.bat
+```
+
+产物：`dist\installer\ChatReplyHelper-Setup-1.0.0.exe`  
+（也会复制到桌面）
 
 ---
 

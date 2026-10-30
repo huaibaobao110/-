@@ -7,9 +7,10 @@ import uuid
 from pathlib import Path
 from typing import Any
 
+from paths_util import app_dir
 from reply_ai import MAX_MODES, RELATION_OPTIONS, default_modes_for
 
-ROOT = Path(__file__).resolve().parent
+ROOT = app_dir()
 CONTACTS_PATH = ROOT / "contacts.json"
 
 DEFAULT_CONTACTS = [
